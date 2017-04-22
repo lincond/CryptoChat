@@ -1,1 +1,2 @@
 src/client/*.o
+src/server/*.o
