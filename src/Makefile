@@ -1,5 +1,8 @@
-all: cryptochat.o main.o
-	g++ -o cryptochat criptochat.o main.o
+all: network.o cryptochat.o main.o
+	g++ -o cryptochat network.o criptochat.o main.o
+
+network.o:
+	g++ -o network.o -c engine/network.cpp
 
 cryptochat.o:
 	g++ -c cryptochat.cpp -o criptochat.o

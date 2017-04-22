@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+#include "engine/network.h"
+
 class CryptoChat
 {
     private:
