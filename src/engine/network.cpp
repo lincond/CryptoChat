@@ -2,7 +2,7 @@
 
 Network::Network(void)
 {
-    this->hostname = "";
+    this->tcpSocket = 0;
 }
 
 /**
@@ -60,12 +60,40 @@ bool Network::resolveHostname(void)
 }
 
 /**
- * Connect to hostname espcified on hostname var
-
-bool Network::connect(void)
+ * Connect to resolved hostname by configured socket
+*/
+bool Network::Connect(void)
 {
+    if( !this->tcpSocket )
+        return false;
 
-}*/
+    if ( connect(this->tcpSocket, this->host, this->hostlen) < 0 )
+        return false;
+
+    return true;
+}
+
+/**
+ * Send some message over the connected socket
+ */
+bool Network::Send(std::string msg)
+{
+    int msg_len = msg.length();
+
+    if ( !this->tcpSocket || msg_len <= 0 )
+        return false;
+
+    if ( write(this->tcpSocket, msg.c_str(), msg_len) != msg_len )
+        return false;
+
+    return true;
+}
+
+void Network::Close(void)
+{
+    close(this->tcpSocket);
+    this->tcpSocket = 0;
+}
 
 Network::~Network(void)
 {

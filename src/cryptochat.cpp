@@ -22,7 +22,18 @@ int CryptoChat::run(void)
     n->port = "";
 
     if ( n->resolveHostname() )
+    {
         std::cout << "Hostname resolved." << '\n';
+        if ( n->Connect() )
+        {
+            if ( n->Send("Hello World!") )
+                std::cout << "String sended!" << '\n';
+            else
+                std::cout << "Couldn't send the message ;(" << '\n';
+        }
+        else
+            std::cout << "Couldn't connect to the server." << '\n';
+    }
     else
         std::cout << "Failed to resolve hostname" << '\n';
 

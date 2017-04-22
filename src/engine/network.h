@@ -27,7 +27,9 @@ class Network
 
 
         bool resolveHostname(void);
-
+        bool Connect(void);
+        bool Send(std::string msg);
+        void Close(void);
         Network(void);
         virtual ~Network();
 };
