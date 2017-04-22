@@ -18,18 +18,19 @@ CryptoChat::CryptoChat(void)
 int CryptoChat::run(void)
 {
     Network* n = new Network;
-    n->hostname = "";
-    n->port = "";
+    n->hostname = "localhost";
+    n->port = "8080";
 
     if ( n->resolveHostname() )
     {
         std::cout << "Hostname resolved." << '\n';
         if ( n->Connect() )
         {
-            if ( n->Send("Hello World!") )
-                std::cout << "String sended!" << '\n';
+            std::cout << "Connected to the server" << '\n';
+            if ( n->Send("Hello World!") && n->Send("Goodbye world!"))
+                std::cout << "Strings sended!" << '\n';
             else
-                std::cout << "Couldn't send the message ;(" << '\n';
+                std::cout << "Couldn't send the messages ;(" << '\n';
         }
         else
             std::cout << "Couldn't connect to the server." << '\n';
