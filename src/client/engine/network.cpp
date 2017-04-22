@@ -1,3 +1,11 @@
+//============================================================================
+// Name        : Network.cpp
+// Author      : Lincon Dias
+// Version     : 0.0.1a
+// Copyright   : MIT License
+// Description : A interface for C's socket library
+//============================================================================
+
 #include "network.h"
 
 Network::Network(void)
@@ -89,6 +97,9 @@ bool Network::Send(std::string msg)
     return true;
 }
 
+/**
+ * Close the connection
+ */
 void Network::Close(void)
 {
     close(this->tcpSocket);
