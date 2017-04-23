@@ -1,5 +1,5 @@
 //============================================================================
-// Name        : Network.cpp
+// Name        : Server.cpp
 // Author      : Lincon Dias
 // Version     : 0.0.1a
 // Copyright   : MIT License
@@ -21,7 +21,7 @@ Server::Server(const char* host, const char* port)
     std::cout << "CryptoChat  Server v0.0.1a" << '\n';
     std::cout << "This software is under construction, may be unstable." << '\n';
     std::cout << "Read more at https://github.com/lincond/CryptoChat" << '\n';
-    std::cout << "\nTry to start server at " << this->host << ':' << this->port << '\n';
+    std::cout << "\nTrying to start server at " << this->host << ':' << this->port << '\n';
 }
 
 int Server::run(void)
@@ -30,6 +30,9 @@ int Server::run(void)
 
     // Make the socket configurations
     if ( !this->ConfigSocket() )
+        return 1;
+
+    if ( !this->ConfigDatabase() )
         return 1;
 
     std::cout << "Server socket config done. Listening for connections." << '\n';
@@ -47,6 +50,7 @@ int Server::run(void)
         // Read from client
         read(this->client, buffer, BUFLEN);
         std::cout << "Recived from client: " << buffer << '\n';
+
         shutdown(this->client, SHUT_WR);
     }
 
@@ -78,8 +82,20 @@ bool Server::ConfigSocket(void)
     return true;
 }
 
+bool Server::ConfigDatabase(void)
+{
+    std::cout << "Trying to start database..." << '\n';
+    this->db = new Database;
+
+    if ( !this->db->init )
+        return false;
+
+    return true;
+}
+
 Server::~Server(void)
 {
     free(this->host);
+    delete this->db;
     close(server);
 }

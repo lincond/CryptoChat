@@ -12,6 +12,9 @@
 #include <stdlib.h>
 #include <arpa/inet.h>
 
+#include "database.h"
+#include "base/user.h"
+
 #define LISTEN 10
 #define BUFLEN 512
 
@@ -22,12 +25,16 @@ class Server
         int port;
         char buffer[BUFLEN];
 
+        // Database
+        Database* db;
+
         // Socket vars
         int server, client;
         struct sockaddr_in srv_addr, cli_addr;
 
         // Private methods
         bool ConfigSocket(void);
+        bool ConfigDatabase(void);
 
     public:
         Server (const char* host, const char* port);

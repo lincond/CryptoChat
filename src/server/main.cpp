@@ -9,5 +9,6 @@ int main(int argc, char const *argv[])
 
     Server* s = new Server(argv[1], argv[2]);
     s->run();
+    delete s;
     return 0;
 }
